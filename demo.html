@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>layuiCombogrid插件演示</title>
+    <link rel="stylesheet" type="text/css" href="layui.css">
+</head>
+<style type="text/css">
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+</style>
+
+<body>
+    <div id="mycombogrid" value="123" style="width:400px;">
+    </div>
+    <div id="myDatagrid">
+    </div>
+</body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="dist/layui-plus0.1.js"></script>
+<script type="text/javascript">
+var columns = [{
+    field: 'dm',
+    title: 'dm',
+    width: 60,
+    align: 'left',
+}, {
+    field: 'id',
+    title: 'id',
+    width: 100,
+    align: 'center',
+}, {
+    field: 'mc',
+    title: 'mc',
+    width: 120,
+    align: 'center',
+}, {
+    field: 'rn',
+    title: 'rn',
+    width: 100,
+    align: 'right',
+}];
+
+var mycombogrid = new Combogrid();
+mycombogrid.init({
+    dom: $('#mycombogrid')[0],
+    datagrid: {
+        width: 400,
+        textField: 'mc',
+        columns: columns,
+        loadSuccess: function(keyword, pageNum, pageSize) {
+            let newSrc = {
+                pageNumber: pageNum + '',
+                pageSize: pageSize + '',
+                jsm: keyword,
+                lx: "01"
+            }
+            var param = {
+                "data": JSON.stringify(newSrc)
+            };
+            $.ajax({
+                url: 'http://125.69.67.12:7080/hisapi/rest/queryDataBySql/000217/5',
+                type: "POST",
+                data: param,
+                async: false,
+                success: function(res) {
+                    let dataObj = JSON.parse(res);
+                    let pageInfo = {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                        totalPage: Math.ceil(dataObj.data.total / pageSize)
+                    }
+                    mycombogrid.setData(dataObj.data.rows, pageInfo);
+                }
+            });
+        },
+        selectRow: function(rowData) {
+            console.log(rowData);
+        }
+    }
+});
+</script>
+
+</html>
