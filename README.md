@@ -15,6 +15,7 @@
 ├── /src/            # 项目开发源码目录
 ├── demo.html     	 # 项目演示文件
 └── README.md  		 # 项目说明文档
+```
 
 ## 代码示例
 ```javascript
