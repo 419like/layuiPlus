@@ -16,18 +16,16 @@
 ├── demo.html     	 # 项目演示文件
 └── README.md  		 # 项目说明文档
 
-```javascript
-	// header 示例
-	header: {
-	    title: "测试配置管理后台",
-	    icon: "appstore",
-	    style: {
-	        padding: "15px 15px 15px 25px",
-	        borderBottom: "1px solid #E9E9E9",
-	        backgroundColor: "#F5F5F5"
+	{
+		header: {
+		    title: "测试配置管理后台",
+		    icon: "appstore",
+		    style: {
+		        padding: "15px 15px 15px 25px",
+		        borderBottom: "1px solid #E9E9E9",
+		        backgroundColor: "#F5F5F5"
 	    }
 	}
-```
 
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
