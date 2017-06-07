@@ -12,10 +12,21 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.center {
+    margin: auto;
+    width: 600px;
+}
 </style>
 
 <body>
-    <div id="mycombogrid" value="123" style="width:400px;">
+    <div class="center">
+        <h1>layuiCombogrid</h1>
+        <div id="mycombogrid" value="" style="width:400px;">
+        </div>
+        <div style="color: #b7b79d">
+            使用简介：输入内容回车检索，上下光标可上下移动选项，左右翻页，可手动翻页，回车选中
+        </div>
     </div>
 </body>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
@@ -72,11 +83,11 @@ mycombogrid.init({
                     let dataObj = JSON.parse(res);
                     // 传入页码信息
                     let pageInfo = {
-                        pageNum: pageNum,
-                        pageSize: pageSize,
-                        totalPage: Math.ceil(dataObj.data.total / pageSize)
-                    }
-                    // 加载完成写入数据
+                            pageNum: pageNum,
+                            pageSize: pageSize,
+                            totalPage: Math.ceil(dataObj.data.total / pageSize)
+                        }
+                        // 加载完成写入数据
                     mycombogrid.setData(dataObj.data.rows, pageInfo);
                 }
             });

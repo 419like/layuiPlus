@@ -1,11 +1,12 @@
 # layuiPlus（文档完善中。。。）
 
 公司项目的一些补充插件（some addtional plug-ins for company.）
+目前集成了输入下拉列表插件（combogrid），内含列表插件(datagrid).
 
 ## 特性
 - 基于 layui 样式 [layui文档](https://github.com/sentsin/layui/)
 - 基于 jquery工具 [jquery](https://github.com/jquery/jquery)
-- 在下拉列表中对列宽的调整引用了 colResizable工具 [colResizable](https://github.com/alvaro-prieto/colResizable)
+- 在下拉列表中对列宽的调整引用了 colResizable工具，直接已集成到库中，不用单独引入 [colResizable](https://github.com/alvaro-prieto/colResizable)
 - 仅引用layui样式，对其js库没有依赖可以不引入
 
 ## 目录结构
@@ -96,6 +97,7 @@ mycombogrid.init({
     }
 });
 ```
+## API
 
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
