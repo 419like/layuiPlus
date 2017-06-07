@@ -16,7 +16,7 @@
 ├── demo.html     	 # 项目演示文件
 └── README.md  		 # 项目说明文档
 
-```
+```javascript
 	// header 示例
 	header: {
 	    title: "测试配置管理后台",
