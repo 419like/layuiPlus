@@ -16,7 +16,7 @@
 ├── demo.html     	 # 项目演示文件
 └── README.md  		 # 项目说明文档
 
-``` javascript
+```javascript
 锄禾日当午
 汗滴禾下土
 谁知盘中餐
