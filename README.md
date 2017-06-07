@@ -6,7 +6,7 @@
 - 基于 layui 样式 [layui文档](https://github.com/sentsin/layui/)
 - 基于 jquery工具 [jquery]https://github.com/jquery/jquery
 - 在下拉列表中对列宽的调整引用了 colResizable工具 [colResizable]https://github.com/alvaro-prieto/colResizable
-- 只是引用了layui样式，对其js库没有依赖可以不引入
+- 仅引用layui样式，对其js库没有依赖可以不引入
 
 ## 目录结构
 ```bash
