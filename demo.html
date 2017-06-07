@@ -12,8 +12,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
-
 </style>
 
 <body>
@@ -25,35 +23,33 @@ body {
 <script type="text/javascript" src="lib/jquery.min.js"></script>
 <script type="text/javascript" src="dist/layui-plus0.1.js"></script>
 <script type="text/javascript">
-let columns = [{
-    field: 'dm',
-    title: 'dm',
-    width: 60,
-    align: 'left',
-}, {
-    field: 'id',
-    title: 'id',
-    width: 100,
-    align: 'center',
-}, {
-    field: 'mc',
-    title: 'mc',
-    width: 120,
-    align: 'center',
-}, {
-    field: 'rn',
-    title: 'rn',
-    width: 100,
-    align: 'right',
-}];
-
 let mycombogrid = new Combogrid();
 mycombogrid.init({
     dom: $('#mycombogrid')[0],
     datagrid: {
         width: 400,
         textField: 'mc',
-        columns: columns,
+        columns: [{
+            field: 'dm',
+            title: 'dm',
+            width: 60,
+            align: 'left',
+        }, {
+            field: 'id',
+            title: 'id',
+            width: 100,
+            align: 'center',
+        }, {
+            field: 'mc',
+            title: 'mc',
+            width: 120,
+            align: 'center',
+        }, {
+            field: 'rn',
+            title: 'rn',
+            width: 100,
+            align: 'right',
+        }],
         loadSuccess: function(keyword, pageNum, pageSize) {
             let newSrc = {
                 pageNumber: pageNum + '',

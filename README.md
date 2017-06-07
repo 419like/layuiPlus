@@ -16,6 +16,68 @@
 ├── demo.html     	 # 项目演示文件
 └── README.md  		 # 项目说明文档
 
+##代码示例
+
+```javascript
+let mycombogrid = new Combogrid();
+mycombogrid.init({
+    dom: $('#mycombogrid')[0],
+    datagrid: {
+        width: 400,
+        textField: 'mc',
+        columns: [{
+            field: 'dm',
+            title: 'dm',
+            width: 60,
+            align: 'left',
+        }, {
+            field: 'id',
+            title: 'id',
+            width: 100,
+            align: 'center',
+        }, {
+            field: 'mc',
+            title: 'mc',
+            width: 120,
+            align: 'center',
+        }, {
+            field: 'rn',
+            title: 'rn',
+            width: 100,
+            align: 'right',
+        }],
+        loadSuccess: function(keyword, pageNum, pageSize) {
+            let newSrc = {
+                pageNumber: pageNum + '',
+                pageSize: pageSize + '',
+                jsm: keyword,
+                lx: "01"
+            }
+            let param = {
+                "data": JSON.stringify(newSrc)
+            };
+            $.ajax({
+                url: 'http://125.69.67.12:7080/hisapi/rest/queryDataBySql/000217/5',
+                type: "POST",
+                data: param,
+                async: false,
+                success: function(res) {
+                    let dataObj = JSON.parse(res);
+                    let pageInfo = {
+                        pageNum: pageNum,
+                        pageSize: pageSize,
+                        totalPage: Math.ceil(dataObj.data.total / pageSize)
+                    }
+                    mycombogrid.setData(dataObj.data.rows, pageInfo);
+                }
+            });
+        },
+        selectRow: function(rowData) {
+            console.log(rowData);
+        }
+    }
+});
+
 ## 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
 
