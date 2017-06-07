@@ -18,7 +18,7 @@
 ```
 
 ## 使用简介
-引入layui.css、jquery、和layuiPlus
+### 文件引入layui.css、jquery、和layuiPlus
 ```html
 <!-- ... -->
 <link rel="stylesheet" type="text/css" href="lib/layui.css">
@@ -27,7 +27,7 @@
 <script type="text/javascript" src="dist/layui-plus0.1.js"></script>
 <!-- ... -->
 ```
-
+### 核心代码示例
 ```javascript
 let mycombogrid = new Combogrid();
 mycombogrid.init({
