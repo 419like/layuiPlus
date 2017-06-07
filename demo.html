@@ -22,10 +22,10 @@ body {
     <div id="myDatagrid">
     </div>
 </body>
-<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="lib/jquery.min.js"></script>
 <script type="text/javascript" src="dist/layui-plus0.1.js"></script>
 <script type="text/javascript">
-var columns = [{
+let columns = [{
     field: 'dm',
     title: 'dm',
     width: 60,
@@ -47,7 +47,7 @@ var columns = [{
     align: 'right',
 }];
 
-var mycombogrid = new Combogrid();
+let mycombogrid = new Combogrid();
 mycombogrid.init({
     dom: $('#mycombogrid')[0],
     datagrid: {
@@ -61,7 +61,7 @@ mycombogrid.init({
                 jsm: keyword,
                 lx: "01"
             }
-            var param = {
+            let param = {
                 "data": JSON.stringify(newSrc)
             };
             $.ajax({
