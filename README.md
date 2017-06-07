@@ -17,7 +17,17 @@
 └── README.md  		 # 项目说明文档
 ```
 
-## 代码示例
+## 使用简介
+引入layui.css、jquery、和layuiPlus
+```html
+<!-- ... -->
+<link rel="stylesheet" type="text/css" href="lib/layui.css">
+<!-- ... -->
+<script type="text/javascript" src="lib/jquery.min.js"></script>
+<script type="text/javascript" src="dist/layui-plus0.1.js"></script>
+<!-- ... -->
+```
+
 ```javascript
 let mycombogrid = new Combogrid();
 mycombogrid.init({
