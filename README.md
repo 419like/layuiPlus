@@ -16,13 +16,17 @@
 ├── demo.html     	 # 项目演示文件
 └── README.md  		 # 项目说明文档
 
-##代码示例
-
-```javascript
-  var ihubo = {
-    nickName  : "草依山",
-    site : "http://jser.me"
-  }
+```
+// header 示例 
+header: {
+    title: "测试配置管理后台",
+    icon: "appstore",
+    style: {
+        padding: "15px 15px 15px 25px",
+        borderBottom: "1px solid #E9E9E9",
+        backgroundColor: "#F5F5F5"
+    }
+}
 ```
 
 ## 有问题反馈
