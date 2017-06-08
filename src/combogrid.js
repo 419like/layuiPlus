@@ -43,6 +43,7 @@ function Combogrid() {
         _this.inputBox.innerHTML = `<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"/><button class="inputIcon"><i class="layui-icon">&#xe625;</i></button>`
         _this.input = $(_this.inputBox).find('input')[0];
         _this.icon = $(_this.inputBox).find('button')[0];
+        $(_this.icon).hide()
         _this.dom.appendChild(_this.inputBox);
         _this.tableBox = document.createElement("div");
         _this.tableBox.setAttribute('class', 'tableBox')

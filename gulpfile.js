@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var useref = require('gulp-useref');
 var gulpif = require('gulp-if');
 var del = require('del');
+var webserver = require('gulp-webserver');
 var vinylPaths = require('vinyl-paths');
 
 gulp.task('default', function() {
@@ -10,7 +11,6 @@ gulp.task('default', function() {
     gulp.run('build')
 });
 
-
 gulp.task('html', function() {
     return gulp.src('demo.html')
         .pipe(useref())
@@ -18,7 +18,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('copy', function() {
-    gulp.src('lib/jquery.min.js')
+    gulp.src(['lib/jquery.min.js','lib/layui.css'])
         .pipe(gulp.dest('dist/lib'));
 });
 
@@ -29,3 +29,12 @@ gulp.task('clean', function() {
 });
 
 gulp.task('build', ['clean', 'copy', 'html']);
+
+gulp.task('server', function() {
+  gulp.src('')
+    .pipe(webserver({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
+});
