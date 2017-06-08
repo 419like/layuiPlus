@@ -1,0 +1,33 @@
+{
+  "name": "layui-plus",
+  "version": "1.0.0",
+  "description": "公司项目的一些补充插件（some addtional plug-ins for company.） 目前集成了输入下拉列表插件（combogrid），内含列表插件(datagrid).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/419like/layuiPlus.git"
+  },
+  "keywords": [
+    "layui",
+    "combogrid"
+  ],
+  "author": "zxs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/419like/layuiPlus/issues"
+  },
+  "homepage": "https://github.com/419like/layuiPlus#readme",
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-rm": "^1.0.4",
+    "gulp-useref": "^3.1.2"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1"
+  }
+}

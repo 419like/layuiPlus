@@ -26,12 +26,16 @@ body {
         </div>
         <div style="color: #b7b79d">
             使用简介：输入内容回车检索，上下光标可上下移动选项，左右翻页，可手动翻页，回车选中
-            
         </div>
     </div>
 </body>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
-<script type="text/javascript" src="dist/layui-plus0.1.js"></script>
+
+<!-- build:js layui-plus0.1.js -->
+<script type="text/javascript" src="src/combogrid.js"></script>
+<script type="text/javascript" src="src/datagrid.js"></script>
+<script type="text/javascript" src="lib/colResizable-1.6.js"></script>
+<!-- endbuild -->
 <script type="text/javascript">
 let mycombogrid = new Combogrid();
 mycombogrid.init({
