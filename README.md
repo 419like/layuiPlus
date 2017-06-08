@@ -11,21 +11,24 @@
 
 ## 目录结构
 ```bash
-├── /dist/           # 项目构建输出目录
-├── /lib/            # 项目依赖其他库的引入文件
-├── /src/            # 项目开发源码目录
-├── demo.html     	 # 项目演示文件
-└── README.md  		 # 项目说明文档
+├── dist/            # 项目构建输出目录
+├── lib/             # 项目依赖其他库的引入文件
+├── src/             # 项目开发源码目录
+├── .gitignore       # 忽略文件列表
+├── README.md        # 项目说明文档
+├── demo.html        # 项目演示文件
+├── gulpfile.js      # 自动化部署
+├── package.json     # npm配置文档
 ```
 
-## 使用简介
-### 文件引入layui.css、jquery、和layuiPlus
+## 简单使用
+### 下载文件包，打开dist文件，参考demo.html,文件引入layui.css、jquery、和layuiPlus
 ```html
 <!-- ... -->
 <link rel="stylesheet" type="text/css" href="lib/layui.css">
 <!-- ... -->
 <script type="text/javascript" src="lib/jquery.min.js"></script>
-<script type="text/javascript" src="dist/layui-plus0.1.js"></script>
+<script type="text/javascript" src="layui-plus0.1.js"></script>
 <!-- ... -->
 ```
 ### 核心代码示例
