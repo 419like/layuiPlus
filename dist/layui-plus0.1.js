@@ -75,7 +75,6 @@ function Combogrid() {
             }
         }
         _this.icon.addEventListener('click', function(e) {
-            console.log('click');
             if (_this.state == 'hide') {
                 _this.setShow();
             } else {
@@ -88,7 +87,6 @@ function Combogrid() {
         })
         $(_this.dom).click(function() {
             _this.editMode = 1;
-            console.log('dom e:' + _this.editMode);
         })
 
         $(_this.input).blur(function(event) {
@@ -114,10 +112,10 @@ function Combogrid() {
                 return;
             }
             if (e.keyCode == ENTER) {
-                console.log('domkey');
                 if (_this.state == 'show') {
                     let item = _this.datagrid.getRow();
                     _this.input.value = item[config.datagrid.textField];
+                    _this.datagrid.enterConfirmItem();
                     _this.setHide();
                 } else {
                     _this.datagrid.search($(_this.input).val());
@@ -275,7 +273,9 @@ function Datagrid() {
         _this.trArr = $(_this.box).find('tbody').find('tr');
 
         _this.rowSelect(list);
-        _this.selectFirstRow();
+        if(list.length>0){
+            _this.selectFirstRow();
+        }
     }
     _this.selectFirstRow = function() {
         let item = _this.trArr[0].item;
@@ -292,6 +292,9 @@ function Datagrid() {
     _this.search = function(keyword) {
         _this.keyword = keyword;
         _this.config.loadSuccess(keyword, 1, _this.pageInfo.pageSize);
+    }
+    _this.enterConfirmItem = function(){
+        _this.chooseItem(_this.currentItem, true);
     }
     _this.selectUp = function() {
         let tempItem;
@@ -326,8 +329,8 @@ function Datagrid() {
         } else {
             _this.currentItem = item;
             _this.trArr[_this.currentItem.index].style.backgroundColor = '#FFFF50';
-            _this.config.selectRow(item);
             if (_this.selectFun && choose) {
+                _this.config.selectRow(item);
                 _this.selectFun(item);
             }
         }
