@@ -27,6 +27,7 @@ body {
         <div style="color: #b7b79d">
             使用简介：输入内容回车检索，上下光标可上下移动选项，左右翻页，可手动翻页，回车选中
         </div>
+        <input type="" name="">
     </div>
 </body>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
@@ -84,6 +85,7 @@ mycombogrid.init({
                 type: "POST",
                 data: param,
                 async: false,
+                timeout:3000,
                 success: function(res) {
                     let dataObj = JSON.parse(res);
                     // 传入页码信息
@@ -102,6 +104,7 @@ mycombogrid.init({
             console.log(rowData);
         }
     }
+
 });
 </script>
 

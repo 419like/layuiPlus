@@ -33,7 +33,7 @@ gulp.task('build', ['clean', 'copy', 'html']);
 gulp.task('server', function() {
   gulp.src('')
     .pipe(webserver({
-      livereload: true,
+      livereload: false,
       directoryListing: true,
       open: true
     }));

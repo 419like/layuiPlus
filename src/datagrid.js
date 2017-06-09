@@ -16,7 +16,7 @@ function Datagrid() {
             nameStr += `<th style="text-align:` + columns[i].align + `">` + columns[i].title + `</th>`
         }
         var tableContent = `
-        <div style="overflow-y: auto;overflow-x: hidden;width:` + config.width + `px;">
+        <div style="overflow-y: hidden;overflow-x: hidden;width:` + config.width + `px;">
             <table class="layui-table" style="margin:0; ">
                 <colgroup>
                     ` + colStr + `
@@ -65,7 +65,7 @@ function Datagrid() {
             _this.config.loadSuccess(_this.keyword, 1, _this.pageInfo.pageSize);
         })
         $(_this.controller).find('#lastPage').click(function(e) {
-            _this.config.loadSuccess(_this.keyword, _this.pageInfo.pageSize, _this.pageInfo.pageSize);
+            _this.config.loadSuccess(_this.keyword, _this.pageInfo.totalPage, _this.pageInfo.pageSize);
         })
         $(_this.controller).find('#goPage').click(function(e) {
             let targetPage = $(_this.controller).find('#targetPage').val()
@@ -73,8 +73,16 @@ function Datagrid() {
         })
         $(_this.controller).find('#pageSize').change(function(e) {
             _this.pageInfo.pageSize = e.currentTarget.value;
-            _this.config.loadSuccess(_this.keyword, _this.pageInfo.pageNum - 1, _this.pageInfo.pageSize);
+            _this.config.loadSuccess(_this.keyword, 1, _this.pageInfo.pageSize);
         });
+        $(_this.controller).find('#targetPage').keyup(function(e){
+            if(e.keyCode == ENTER){
+                let targetPage = $(_this.controller).find('#targetPage').val()
+                _this.config.loadSuccess(_this.keyword, targetPage, _this.pageInfo.pageSize);
+                e.stopPropagation();
+            }
+        })
+
         _this.pageInfo = {
             pageSize: 5,
             totalPage: 1,
@@ -106,7 +114,7 @@ function Datagrid() {
             item.index = i;
             let rowStr = `<tr>`
             for (var j = 0; j < _this.config.columns.length; j++) {
-                rowStr += `<td style="text-align:` + _this.config.columns[j].align + `">` + item[_this.config.columns[j].field] + `</td>`
+                rowStr += `<td title="`+item[_this.config.columns[j].field]+`"" style="text-align:` + _this.config.columns[j].align + `">` + item[_this.config.columns[j].field] + `</td>`
             }
             rowStr += `</tr>`
             listStr += rowStr;

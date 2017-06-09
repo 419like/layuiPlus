@@ -1,17 +1,25 @@
+    const UP = 38;
+    const DOWN = 40;
+    const LEFT = 37;
+    const RIGHT = 39;
+    const ENTER = 13;
+    const TAB = 9;
+
 function Combogrid() {
     var _this = this;
+
     this.init = function(config) {
         _this.config = config;
         _this.dom = config.dom;
-        let idStr = '#'+$(_this.dom)[0].id;
+        let idStr = '#' + $(_this.dom)[0].id;
         $('head').append(`
         <style type='text/css'>
-            `+idStr+` .tableBox {
+            ` + idStr + ` .tableBox {
                 position: absolute;
                 display: none;
             }
 
-            `+idStr+` .inputIcon {
+            ` + idStr + ` .inputIcon {
                 height: 25px;
                 width: 25px;
                 position: absolute;
@@ -19,20 +27,26 @@ function Combogrid() {
                 top: 0px;
             }
 
-            `+idStr+` .inputBox {
+            ` + idStr + ` .inputBox {
                 position: relative;
                 height:25px;
             }
 
-            `+idStr+` .tableBox {
+            ` + idStr + ` .tableBox {
                 position: absolute;cor
                 top: 25px;
                 border: 1px solid #c0dadd;
             }
 
-            `+idStr+` .layui-table th {
+            ` + idStr + ` .layui-table th {
                 overflow: hidden;
             }
+
+            ` + idStr + ` .layui-table td {
+                word-break: keep-all;
+                white-space: nowrap;
+            }
+
         </style>`);
         _this.dom.setAttribute(
             "tabindex", "1"
@@ -53,7 +67,7 @@ function Combogrid() {
         config.datagrid.dom = _this.tableBox;
         _this.datagrid.init(config.datagrid);
         _this.datagrid.extraNext = _this.searchInput;
-        
+
         if (config.datagrid.textField) {
             _this.datagrid.selectFun = function(item) {
                 _this.input.value = item[config.datagrid.textField];
@@ -68,13 +82,21 @@ function Combogrid() {
                 _this.setHide();
             }
         });
-        $(_this.input).keyup(function(e) {
-            const UP = 38;
-            const DOWN = 40;
-            const LEFT = 37;
-            const RIGHT = 39;
-            const ENTER = 13;
-            const TAB = 9;
+        $(_this.input).focus(function() {
+            // $(_this.dom).focus();
+            _this.editMode = 1;
+        })
+        $(_this.dom).click(function() {
+            _this.editMode = 1;
+            console.log('dom e:' + _this.editMode);
+        })
+
+        $(_this.input).blur(function(event) {
+            /* Act on the event */
+            _this.editMode = 2;
+        });
+
+        $(_this.dom).keyup(function(e) {
             if (e.keyCode == UP) {
                 _this.datagrid.selectUp();
                 return;
@@ -92,6 +114,7 @@ function Combogrid() {
                 return;
             }
             if (e.keyCode == ENTER) {
+                console.log('domkey');
                 if (_this.state == 'show') {
                     let item = _this.datagrid.getRow();
                     _this.input.value = item[config.datagrid.textField];
@@ -101,7 +124,6 @@ function Combogrid() {
                 }
                 return;
             }
-            _this.setHide();
         });
     }
     _this.setData = function(listdata, pageInfo) {
@@ -111,12 +133,19 @@ function Combogrid() {
     _this.setHide = function() {
         _this.state = 'hide';
         $(_this.tableBox).hide();
-
+        
+    }
+    _this.blur = function(e) {
+        if(!$(_this.dom).has(e.target)[0]){
+            $('html').unbind('click', _this.blur);
+            _this.setHide();
+        }
     }
     _this.setShow = function() {
         _this.state = 'show';
         $(_this.tableBox).show();
         $(_this.tableBox).find('table').colResizable();
+        $('html').click(_this.blur);
     }
 
 }
