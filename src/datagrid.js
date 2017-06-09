@@ -123,7 +123,9 @@ function Datagrid() {
         _this.trArr = $(_this.box).find('tbody').find('tr');
 
         _this.rowSelect(list);
-        _this.selectFirstRow();
+        if(list.length>0){
+            _this.selectFirstRow();
+        }
     }
     _this.selectFirstRow = function() {
         let item = _this.trArr[0].item;
@@ -140,6 +142,9 @@ function Datagrid() {
     _this.search = function(keyword) {
         _this.keyword = keyword;
         _this.config.loadSuccess(keyword, 1, _this.pageInfo.pageSize);
+    }
+    _this.enterConfirmItem = function(){
+        _this.chooseItem(_this.currentItem, true);
     }
     _this.selectUp = function() {
         let tempItem;
@@ -174,8 +179,8 @@ function Datagrid() {
         } else {
             _this.currentItem = item;
             _this.trArr[_this.currentItem.index].style.backgroundColor = '#FFFF50';
-            _this.config.selectRow(item);
             if (_this.selectFun && choose) {
+                _this.config.selectRow(item);
                 _this.selectFun(item);
             }
         }

@@ -75,7 +75,6 @@ function Combogrid() {
             }
         }
         _this.icon.addEventListener('click', function(e) {
-            console.log('click');
             if (_this.state == 'hide') {
                 _this.setShow();
             } else {
@@ -88,7 +87,6 @@ function Combogrid() {
         })
         $(_this.dom).click(function() {
             _this.editMode = 1;
-            console.log('dom e:' + _this.editMode);
         })
 
         $(_this.input).blur(function(event) {
@@ -114,10 +112,10 @@ function Combogrid() {
                 return;
             }
             if (e.keyCode == ENTER) {
-                console.log('domkey');
                 if (_this.state == 'show') {
                     let item = _this.datagrid.getRow();
                     _this.input.value = item[config.datagrid.textField];
+                    _this.datagrid.enterConfirmItem();
                     _this.setHide();
                 } else {
                     _this.datagrid.search($(_this.input).val());
