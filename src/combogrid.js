@@ -35,6 +35,7 @@ function Combogrid() {
             ` + idStr + ` .tableBox {
                 position: absolute;cor
                 top: 25px;
+                z-index: 2147483647;
                 border: 1px solid #c0dadd;
             }
 
