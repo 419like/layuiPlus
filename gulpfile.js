@@ -4,6 +4,9 @@ var gulpif = require('gulp-if');
 var del = require('del');
 var webserver = require('gulp-webserver');
 var vinylPaths = require('vinyl-paths');
+var readline = require('readline');
+const confirm = require('gulp-confirm');
+const git = require('gulp-git');
 
 gulp.task('default', function() {
     // 将你的默认的任务代码放在这
@@ -18,7 +21,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('copy', function() {
-    gulp.src(['lib/jquery.min.js','lib/layui.css'])
+    gulp.src(['lib/jquery.min.js', 'lib/layui.css'])
         .pipe(gulp.dest('dist/lib'));
 });
 
@@ -28,13 +31,24 @@ gulp.task('clean', function() {
         .pipe(vinylPaths(del));
 });
 
-gulp.task('build', ['clean', 'copy', 'html']);
+gulp.task('willPublic', function() {
+    gulp.src('')
+    .pipe(confirm({
+      // Static text. 
+      question: 'will you publish on github?',
+      input: '_key:y'
+    }))
+    .pipe(git.add({args: '--all'}));
+
+})
+
+gulp.task('build', ['clean', 'copy', 'html', 'willPublic']);
 
 gulp.task('server', function() {
-  gulp.src('')
-    .pipe(webserver({
-      livereload: false,
-      directoryListing: true,
-      open: true
-    }));
+    gulp.src('')
+        .pipe(webserver({
+            livereload: false,
+            directoryListing: true,
+            open: true
+        }));
 });
