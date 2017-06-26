@@ -35,7 +35,7 @@ function Datagrid() {
         var controll = `
         <div id="controller" style="display: flex;margin-top:10px;">
             <div>
-                <select id="pageSize" name="pagesize" lay-verify="">
+                <select style="width:30px;" id="pageSize" name="pagesize" lay-verify="">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
