@@ -11,13 +11,16 @@ function Combogrid() {
     this.init = function(config) {
         _this.config = config;
         if(config.id){
-            _this.dom = config.$('#'+config.id);
+            _this.dom = $('#'+config.id)[0];
         }else{
             _this.dom = config.dom;
         }
         let idStr = '#' + $(_this.dom)[0].id;
         $('head').append(`
         <style type='text/css'>
+            ` + idStr + `{
+                position: relative;
+            }
             ` + idStr + ` .tableBox {
                 position: absolute;
                 display: none;
@@ -41,6 +44,7 @@ function Combogrid() {
                 top: 25px;
                 z-index: 2147483647;
                 border: 1px solid #c0dadd;
+                background:#fff;
             }
 
             ` + idStr + ` .layui-table th {
@@ -53,6 +57,9 @@ function Combogrid() {
             }
 
         </style>`);
+        _this.dom.setAttribute(
+            "tabindex", "1"
+        );
 
         _this.inputBox = document.createElement("div");
         _this.inputBox.setAttribute('class', 'inputBox')
@@ -127,6 +134,9 @@ function Combogrid() {
         });
     }
     _this.setData = function(listdata, pageInfo) {
+        if(listdata.length==0){
+            return;
+        }
         _this.datagrid.setData(listdata, pageInfo);
         _this.setShow();
     }
@@ -144,6 +154,27 @@ function Combogrid() {
     _this.setShow = function() {
         _this.state = 'show';
         $(_this.tableBox).show();
+        // 适应高度
+        var winH = $(window).height();
+        var domTop = _this.dom.getBoundingClientRect().top;
+        var inputH = _this.input.getBoundingClientRect().height;
+        var tableH = _this.tableBox.getBoundingClientRect().height;
+        if(winH-domTop-inputH<tableH){
+            _this.tableBox.style.top = '-'+tableH+'px';
+        }else{
+             _this.tableBox.style.top = '';
+        }
+        // 适应宽度
+        var winW = $(window).width();
+        var domLeft = _this.dom.getBoundingClientRect().left;
+        var inputW = _this.input.getBoundingClientRect().width;
+        var tableW = _this.tableBox.getBoundingClientRect().width;
+        if(winW-domLeft<tableW){
+            _this.tableBox.style.left = '-'+(tableW-inputW)+'px';
+        }else{
+             _this.tableBox.style.left = '';
+        }
+
         $(_this.tableBox).find('table').colResizable();
         $('html').click(_this.blur);
     }
@@ -339,6 +370,33 @@ function Datagrid() {
     }
 }
 
+$.fn.setOption = function(data) {
+    //your code goes here
+    console.log('setOption');
+    var list = data.list;
+    for(var i=0;i<list.length;i++){
+    	this.append(`<option value="`+list[i][data.valueField]+`">`+list[i][data.textField]+`</option>`)
+    }
+}
+
+$.fn.setVal = function(data) {
+    if(this.find("option[value='"+data.value+"']").length==0){
+    	this.append(`<option extradata="true" value="`+data.value+`">`+data.text+`</option>`)
+    }
+    this.val(data.value)
+}
+
+$.fn.checkUnusual = function(){
+	var selectArr = this.find('select');
+	for(var i=0;i<selectArr.length;i++){
+		var val = $(selectArr[i]).val();
+		if($(selectArr[i]).find("option[value='"+val+"']").attr('extradata')){
+			layer.alert('异常元素', {icon: 2});
+			$(selectArr[i]).addClass('layui-form-danger');
+			$(selectArr[i]).focus();
+		}
+	}
+}
 /**
                _ _____           _          _     _      
               | |  __ \         (_)        | |   | |     

@@ -18,6 +18,9 @@ function Combogrid() {
         let idStr = '#' + $(_this.dom)[0].id;
         $('head').append(`
         <style type='text/css'>
+            ` + idStr + `{
+                position: relative;
+            }
             ` + idStr + ` .tableBox {
                 position: absolute;
                 display: none;
@@ -41,6 +44,7 @@ function Combogrid() {
                 top: 25px;
                 z-index: 2147483647;
                 border: 1px solid #c0dadd;
+                background:#fff;
             }
 
             ` + idStr + ` .layui-table th {
@@ -130,6 +134,9 @@ function Combogrid() {
         });
     }
     _this.setData = function(listdata, pageInfo) {
+        if(listdata.length==0){
+            return;
+        }
         _this.datagrid.setData(listdata, pageInfo);
         _this.setShow();
     }
@@ -147,6 +154,27 @@ function Combogrid() {
     _this.setShow = function() {
         _this.state = 'show';
         $(_this.tableBox).show();
+        // 适应高度
+        var winH = $(window).height();
+        var domTop = _this.dom.getBoundingClientRect().top;
+        var inputH = _this.input.getBoundingClientRect().height;
+        var tableH = _this.tableBox.getBoundingClientRect().height;
+        if(winH-domTop-inputH<tableH){
+            _this.tableBox.style.top = '-'+tableH+'px';
+        }else{
+             _this.tableBox.style.top = '';
+        }
+        // 适应宽度
+        var winW = $(window).width();
+        var domLeft = _this.dom.getBoundingClientRect().left;
+        var inputW = _this.input.getBoundingClientRect().width;
+        var tableW = _this.tableBox.getBoundingClientRect().width;
+        if(winW-domLeft<tableW){
+            _this.tableBox.style.left = '-'+(tableW-inputW)+'px';
+        }else{
+             _this.tableBox.style.left = '';
+        }
+
         $(_this.tableBox).find('table').colResizable();
         $('html').click(_this.blur);
     }

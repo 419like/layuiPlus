@@ -7,6 +7,12 @@ var vinylPaths = require('vinyl-paths');
 var readline = require('readline');
 const confirm = require('gulp-confirm');
 const git = require('gulp-git');
+var rm = require( 'gulp-rm' )
+ 
+gulp.task( 'cleanDist', function() {
+  return gulp.src( 'dist/**/*', { read: false })
+    .pipe( rm() )
+})
 
 gulp.task('default', function() {
     // 将你的默认的任务代码放在这
@@ -38,11 +44,11 @@ gulp.task('willPublic', function() {
       question: 'will you publish on github?',
       input: '_key:y'
     }))
-    .pipe(git.add({args: '--all'}));
+    .pipe(git.add({args: '--all'}))
 
 })
 
-gulp.task('build', ['clean', 'copy', 'html', 'willPublic']);
+gulp.task('build', ['cleanDist', 'html']);
 
 gulp.task('server', function() {
     gulp.src('')
