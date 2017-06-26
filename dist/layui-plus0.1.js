@@ -10,7 +10,11 @@ function Combogrid() {
 
     this.init = function(config) {
         _this.config = config;
-        _this.dom = config.dom;
+        if(config.id){
+            _this.dom = config.$('#'+config.id);
+        }else{
+            _this.dom = config.dom;
+        }
         let idStr = '#' + $(_this.dom)[0].id;
         $('head').append(`
         <style type='text/css'>
@@ -49,9 +53,6 @@ function Combogrid() {
             }
 
         </style>`);
-        _this.dom.setAttribute(
-            "tabindex", "1"
-        );
 
         _this.inputBox = document.createElement("div");
         _this.inputBox.setAttribute('class', 'inputBox')

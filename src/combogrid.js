@@ -10,7 +10,11 @@ function Combogrid() {
 
     this.init = function(config) {
         _this.config = config;
-        _this.dom = config.dom;
+        if(config.id){
+            _this.dom = $('#'+config.id)[0];
+        }else{
+            _this.dom = config.dom;
+        }
         let idStr = '#' + $(_this.dom)[0].id;
         $('head').append(`
         <style type='text/css'>
