@@ -22,6 +22,11 @@ body {
 </style>
 
 <body>
+    <select lay-ignore style="width:60px;" >
+        <option value="5" selected="selected">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+    </select>
     <div class="center">
         <h1>layuiCombogrid</h1>
         <div id="mycombogrid" value="" style="width:400px;">
@@ -85,6 +90,8 @@ mycombogrid.init({
             width: 100,
             align: 'right',
         }],
+        // 只能选取5，10，15三个数中一个默认为5
+        pageSize:10,
         // 加载成功回调函数
         loadSuccess: function(keyword, pageNum, pageSize) {
             let newSrc = {
@@ -106,11 +113,11 @@ mycombogrid.init({
                     let dataObj = JSON.parse(res);
                     // 传入页码信息
                     let pageInfo = {
-                            pageNum: pageNum,
-                            pageSize: pageSize,
-                            totalPage: Math.ceil(dataObj.data.total / pageSize)
-                        }
-                        // 加载完成写入数据
+                        pageNum: pageNum,
+                        totalPage: Math.ceil(dataObj.data.total / pageSize)
+                    }
+                    // 加载完成写入数据
+                    debugger
                     mycombogrid.setData(dataObj.data.rows, pageInfo);
                 }
             });

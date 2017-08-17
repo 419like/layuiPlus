@@ -35,11 +35,12 @@
 ```javascript
 let mycombogrid = new Combogrid();
 mycombogrid.init({
-    // 对应要转换为控件的dom对象
-    dom: document.getElementById('mycombogrid'),
+    // 对应要转换为控件的dom的id，对应要转换为控件的dom对象两种方式二选一，
+    id: 'mycombogrid',
+    // dom: document.getElementById('mycombogrid'),
     datagrid: {
         // 弹出表格的宽度单位PX
-        width: 400,
+        width: 600,
         // 写入input对应的列名
         textField: 'mc',
         // 列设置其中align有（left、center、right）
@@ -64,6 +65,8 @@ mycombogrid.init({
             width: 100,
             align: 'right',
         }],
+        // 只能选取5，10，15三个数中一个默认为5
+        pageSize:10,
         // 加载成功回调函数
         loadSuccess: function(keyword, pageNum, pageSize) {
             let newSrc = {
@@ -80,15 +83,16 @@ mycombogrid.init({
                 type: "POST",
                 data: param,
                 async: false,
+                timeout: 3000,
                 success: function(res) {
                     let dataObj = JSON.parse(res);
                     // 传入页码信息
                     let pageInfo = {
                         pageNum: pageNum,
-                        pageSize: pageSize,
                         totalPage: Math.ceil(dataObj.data.total / pageSize)
                     }
                     // 加载完成写入数据
+                    debugger
                     mycombogrid.setData(dataObj.data.rows, pageInfo);
                 }
             });
@@ -98,6 +102,7 @@ mycombogrid.init({
             console.log(rowData);
         }
     }
+
 });
 ```
 

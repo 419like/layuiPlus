@@ -1,4 +1,3 @@
-
 /*
 基于layui样式的datagrid
  */
@@ -8,15 +7,15 @@ function Datagrid() {
         _this.config = config;
         _this.box = config.dom;
 
-        let columns = config.columns
-        let colStr = '';
-        let nameStr = '';
+        var columns = config.columns
+        var colStr = '';
+        var nameStr = '';
         for (var i = 0; i < columns.length; i++) {
-            colStr += `<col width="` + columns[i].width + `">`
+            colStr += `<col width="` + columns[i].width + `px;">`
             nameStr += `<th style="text-align:` + columns[i].align + `">` + columns[i].title + `</th>`
         }
         var tableContent = `
-        <div style="overflow-y: hidden;overflow-x: hidden;width:` + config.width + `px;">
+        <div style="overflow:auto;width:` + config.width + `px;">
             <table class="layui-table" style="margin:0; ">
                 <colgroup>
                     ` + colStr + `
@@ -35,20 +34,21 @@ function Datagrid() {
         var controll = `
         <div id="controller" style="display: flex;margin-top:10px;">
             <div>
-                <select style="width:30px;" id="pageSize" name="pagesize" lay-verify="">
-                    <option value="5">5</option>
+
+                <select id="pageSize" lay-ignore style="width:60px;" >
+                    <option value="5" selected="selected">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
-                </select>
+                    </select>
             </div>
             <div>
-                <button id="firstPage">首页</button>
-                <button id="prePage">上一页</button>
-                <span id="pageInfo">第1/5页</span>
-                <button id="nextPage">下一页</button>
-                <button id="lastPage">尾页</button>
+                <button id="firstPage"><<</button>
+                <button id="prePage"><</button>
+                <span id="pageInfo">1/5</span>
+                <button id="nextPage">></button>
+                <button id="lastPage">>></button>
                 &nbsp;
-                <button id="goPage">前往</button>
+                <button id="goPage">→</button>
                 <input id="targetPage" type="text" style="width:20px;">
                 页
             </div>
@@ -68,16 +68,17 @@ function Datagrid() {
             _this.config.loadSuccess(_this.keyword, _this.pageInfo.totalPage, _this.pageInfo.pageSize);
         })
         $(_this.controller).find('#goPage').click(function(e) {
-            let targetPage = $(_this.controller).find('#targetPage').val()
+            var targetPage = $(_this.controller).find('#targetPage').val()
             _this.config.loadSuccess(_this.keyword, targetPage, _this.pageInfo.pageSize);
         })
         $(_this.controller).find('#pageSize').change(function(e) {
             _this.pageInfo.pageSize = e.currentTarget.value;
             _this.config.loadSuccess(_this.keyword, 1, _this.pageInfo.pageSize);
         });
-        $(_this.controller).find('#targetPage').keyup(function(e){
-            if(e.keyCode == ENTER){
-                let targetPage = $(_this.controller).find('#targetPage').val()
+        $(_this.controller).find('#targetPage').keyup(function(e) {
+            if (e.keyCode == ENTER) {
+                var targetPage = $(_this.controller).find('#targetPage').val()
+                debugger
                 _this.config.loadSuccess(_this.keyword, targetPage, _this.pageInfo.pageSize);
                 e.stopPropagation();
             }
@@ -88,6 +89,12 @@ function Datagrid() {
             totalPage: 1,
             pageNum: 1
         }
+        if (config.pageSize) {
+            _this.pageInfo.pageSize = config.pageSize;
+            
+        }
+        debugger
+        $(_this.controller).find('#pageSize').val(_this.pageInfo.pageSize)
     }
     _this.nextPage = function() {
         if (_this.pageInfo.pageNum + 1 <= _this.pageInfo.totalPage) {
@@ -106,15 +113,16 @@ function Datagrid() {
     _this.setData = function(list, pageInfo) {
         _this.currentItem = '';
         if (pageInfo) {
+            pageInfo.pageSize = $(_this.controller).find('#pageSize')[0].value;
             _this.setPage(pageInfo)
         }
-        let listStr = ``;
+        var listStr = ``;
         for (var i = 0; i < list.length; i++) {
-            let item = list[i];
+            var item = list[i];
             item.index = i;
-            let rowStr = `<tr>`
+            var rowStr = `<tr>`
             for (var j = 0; j < _this.config.columns.length; j++) {
-                rowStr += `<td title="`+item[_this.config.columns[j].field]+`"" style="text-align:` + _this.config.columns[j].align + `">` + item[_this.config.columns[j].field] + `</td>`
+                rowStr += `<td title="` + item[_this.config.columns[j].field] + `"" style="text-align:` + _this.config.columns[j].align + `">` + item[_this.config.columns[j].field] + `</td>`
             }
             rowStr += `</tr>`
             listStr += rowStr;
@@ -123,12 +131,12 @@ function Datagrid() {
         _this.trArr = $(_this.box).find('tbody').find('tr');
 
         _this.rowSelect(list);
-        if(list.length>0){
+        if (list.length > 0) {
             _this.selectFirstRow();
         }
     }
     _this.selectFirstRow = function() {
-        let item = _this.trArr[0].item;
+        var item = _this.trArr[0].item;
         _this.chooseItem(item);
     }
     _this.rowSelect = function(list) {
@@ -141,13 +149,14 @@ function Datagrid() {
     }
     _this.search = function(keyword) {
         _this.keyword = keyword;
+        debugger
         _this.config.loadSuccess(keyword, 1, _this.pageInfo.pageSize);
     }
-    _this.enterConfirmItem = function(){
+    _this.enterConfirmItem = function() {
         _this.chooseItem(_this.currentItem, true);
     }
     _this.selectUp = function() {
-        let tempItem;
+        var tempItem;
         if (_this.currentItem.index - 1 < 0) {
             tempItem = _this.trArr[_this.trArr.length - 1];
         } else {
@@ -157,7 +166,7 @@ function Datagrid() {
         return tempItem.item[_this.config.textField]
     }
     _this.selectDown = function() {
-        let tempItem;
+        var tempItem;
         if (_this.currentItem.index + 1 > _this.trArr.length - 1) {
             tempItem = _this.trArr[0];
         } else {
