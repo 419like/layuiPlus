@@ -7,7 +7,9 @@
 
     function Combogrid() {
         var _this = this;
-
+        this.clear = function(){
+            _this.input.value = '';
+        }
         this.init = function(config) {
             _this.config = config;
             if (config.id) {
@@ -68,7 +70,8 @@
 
             _this.inputBox = document.createElement("div");
             _this.inputBox.setAttribute('class', 'inputBox')
-            _this.inputBox.innerHTML = `<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"/><button class="inputIcon"><i class="layui-icon">&#xe625;</i></button>`
+            debugger
+            _this.inputBox.innerHTML = `<input type="text" name="title" required  lay-verify="required" placeholder="`+_this.config.placeholder+`" autocomplete="off" class="layui-input"/><button class="inputIcon"><i class="layui-icon">&#xe625;</i></button>`
             _this.input = $(_this.inputBox).find('input')[0];
             _this.icon = $(_this.inputBox).find('button')[0];
             $(_this.icon).hide()
@@ -126,14 +129,12 @@
                     return;
                 }
                 if (e.keyCode == ENTER) {
-                    debugger
                     if (_this.state == 'show') {
                         var item = _this.datagrid.getRow();
                         _this.input.value = item[config.datagrid.textField];
                         _this.datagrid.enterConfirmItem();
                         _this.setHide();
                     } else {
-
                         _this.datagrid.search($(_this.input).val());
                     }
                     event.stopPropagation();
@@ -141,8 +142,11 @@
                 }
             });
         }
-        _this.setData = function(listdata, pageInfo) {
+        _this.search = function(){
             debugger
+            _this.datagrid.search($(_this.input).val());
+        }
+        _this.setData = function(listdata, pageInfo) {
             if (listdata.length == 0) {
                 return;
             }
@@ -150,11 +154,14 @@
             _this.setShow();
         }
         _this.setHide = function() {
+            debugger
             _this.state = 'hide';
             $(_this.tableBox).hide();
 
         }
         _this.blur = function(e) {
+            debugger
+            // 点击对象不是组件dom中的
             if (!$(_this.dom).has(e.target)[0]) {
                 $('html').unbind('click', _this.blur);
                 _this.setHide();
@@ -185,6 +192,7 @@
             }
 
             $(_this.tableBox).find('table').colResizable();
+            // 组件失焦监测
             $('html').click(_this.blur);
         }
 
@@ -234,13 +242,48 @@ function Datagrid() {
                     </select>
             </div>
             <div>
-                <button id="firstPage"><<</button>
-                <button id="prePage"><</button>
+                <button id="firstPage">
+                    <svg viewBox="0 0 1024 1024" class="svgIcon" style="height:10px;">
+                        <path d="M512 256v512L128 512zM896 256v512L512 512z" fill="#666666">
+                    </svg>
+                </button>
+                <button id="prePage">
+                    <svg viewBox="0 0 1024 1024" class="svgIcon" style="height:10px;">
+                        <path d="M704 256v512L320 512z" fill="#666666" ></path>
+                    </svg>
+                </button>
                 <span id="pageInfo">1/5</span>
-                <button id="nextPage">></button>
-                <button id="lastPage">>></button>
+                <button id="nextPage">
+                    <svg viewBox="0 0 1024 1024" class="svgIcon" style="height:10px;fill:#000;">
+                        <path d="M320 256v512l384-256z" fill="#666666" ></path>
+                    </svg>
+                </button>
+                <button id="lastPage">
+                    <svg viewBox="0 0 1024 1024" class="svgIcon" style="height:10px;">
+                        <path d="M512 256v512l384-256zM128 256v512l384-256z" fill="#666666"></svg>
+                </button>
                 &nbsp;
-                <button id="goPage">→</button>
+                <button id="goPage">
+                    <svg viewBox="0 0 1024 1024" class="svgIcon" style="height:10px;">
+                        <path d="M925.230486 377.716644 595.284845
+                         173.486216c-31.600719-19.560498-53.66934-12.815887-64.011896-7.054673-10.341532
+                          5.761214-27.691689 20.97573-27.691689 58.141188l0
+                           75.611072c-17.833157 0-36.043914 0-54.219879
+                            0-485.10035 0-374.45946 555.50484-374.45946
+                             555.50484S110.877273 542.048363 449.533296
+                              542.048363c18.073634 0 36.21583 0 54.015218
+                               0 0 46.283116 0 88.579431 0 121.807207
+                                0 0.309038 0 0.618077 0 0.926092 0 0.275269
+                                 0 0.584308 0 0.895393 0 5.118578 0 9.999748
+                                  0 14.637372 0.011256-0.001023 0.022513-0.002047
+                                   0.033769-0.00307l0-38.116109c0 37.164435
+                                    17.350157 52.379974 27.691689 58.140165
+                                     5.139044 2.863211 13.173021 5.968945 23.835871 5.968945 10.79281
+                                      0 24.278963-3.183506 40.176025-13.024641l329.946664-204.229404c23.225981-14.377452
+                                       36.018332-34.146705 36.018332-55.665811C961.248817 
+                                       411.863349 948.456467 392.094096 925.230486 377.716644z"></path>
+                    </svg>
+                </button>
                 <input id="targetPage" type="text" style="width:20px;">
                 页
             </div>
@@ -285,7 +328,6 @@ function Datagrid() {
             _this.pageInfo.pageSize = config.pageSize;
             
         }
-        debugger
         $(_this.controller).find('#pageSize').val(_this.pageInfo.pageSize)
     }
     _this.nextPage = function() {

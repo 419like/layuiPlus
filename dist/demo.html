@@ -52,18 +52,25 @@ body {
             </div>
         </div>
         <button id="save_bt" type="button" onclick="submit1();">jiancha</button>
+        <button id="clearBtn" type="button" onclick="clear();">清除</button>
+        <button id="search" type="button" onclick="clear();">搜索</button>
     </form>
 </body>
 <script type="text/javascript" src="lib/jquery.min.js"></script>
 <script type="text/javascript" src="lib/layui.js"></script>
 <script src="layui-plus0.1.js"></script>
 <script type="text/javascript">
+let rootUrl;
+rootUrl = 'http://125.69.67.12:7080/hisapi';
+rootUrl = 'http://172.16.110.41:8080/testapi';
 let mycombogrid = new Combogrid();
 mycombogrid.init({
+    placeholder:'fuck',
     // 对应要转换为控件的dom的id，对应要转换为控件的dom对象两种方式二选一，
     id: 'mycombogrid',
     // dom: document.getElementById('mycombogrid'),
     datagrid: {
+
         // 弹出表格的宽度单位PX
         width: 600,
         // 写入input对应的列名
@@ -91,7 +98,7 @@ mycombogrid.init({
             align: 'right',
         }],
         // 只能选取5，10，15三个数中一个默认为5
-        pageSize:10,
+        // pageSize:10,
         // 加载成功回调函数
         loadSuccess: function(keyword, pageNum, pageSize) {
             let newSrc = {
@@ -104,7 +111,7 @@ mycombogrid.init({
                 "data": JSON.stringify(newSrc)
             };
             $.ajax({
-                url: 'http://125.69.67.12:7080/hisapi/rest/queryDataBySql/000217/5',
+                url: rootUrl+'/rest/queryDataBySql/000217/5',
                 type: "POST",
                 data: param,
                 async: false,
@@ -117,7 +124,6 @@ mycombogrid.init({
                         totalPage: Math.ceil(dataObj.data.total / pageSize)
                     }
                     // 加载完成写入数据
-                    debugger
                     mycombogrid.setData(dataObj.data.rows, pageInfo);
                 }
             });
@@ -130,6 +136,7 @@ mycombogrid.init({
 
 });
 
+
 //Demo
 layui.use('form', function() {
     var form = layui.form();
@@ -139,7 +146,6 @@ layui.use('form', function() {
         return false;
     });
 });
-
 var list = [{
     value: 000,
     text: '北京'
@@ -163,6 +169,16 @@ function submit1() {
         // 。。。
     }
 }
+debugger
+$('#clearBtn').click(function(){
+    debugger
+    mycombogrid.clear();
+})
+
+$('#search').click(function(e){
+    mycombogrid.search();
+    e.stopPropagation();
+})
 </script>
 
 </html>

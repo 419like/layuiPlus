@@ -7,7 +7,9 @@
 
     function Combogrid() {
         var _this = this;
-
+        this.clear = function(){
+            _this.input.value = '';
+        }
         this.init = function(config) {
             _this.config = config;
             if (config.id) {
@@ -68,7 +70,8 @@
 
             _this.inputBox = document.createElement("div");
             _this.inputBox.setAttribute('class', 'inputBox')
-            _this.inputBox.innerHTML = `<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input"/><button class="inputIcon"><i class="layui-icon">&#xe625;</i></button>`
+            debugger
+            _this.inputBox.innerHTML = `<input type="text" name="title" required  lay-verify="required" placeholder="`+_this.config.placeholder+`" autocomplete="off" class="layui-input"/><button class="inputIcon"><i class="layui-icon">&#xe625;</i></button>`
             _this.input = $(_this.inputBox).find('input')[0];
             _this.icon = $(_this.inputBox).find('button')[0];
             $(_this.icon).hide()
@@ -126,14 +129,12 @@
                     return;
                 }
                 if (e.keyCode == ENTER) {
-                    debugger
                     if (_this.state == 'show') {
                         var item = _this.datagrid.getRow();
                         _this.input.value = item[config.datagrid.textField];
                         _this.datagrid.enterConfirmItem();
                         _this.setHide();
                     } else {
-
                         _this.datagrid.search($(_this.input).val());
                     }
                     event.stopPropagation();
@@ -141,8 +142,11 @@
                 }
             });
         }
-        _this.setData = function(listdata, pageInfo) {
+        _this.search = function(){
             debugger
+            _this.datagrid.search($(_this.input).val());
+        }
+        _this.setData = function(listdata, pageInfo) {
             if (listdata.length == 0) {
                 return;
             }
@@ -150,11 +154,14 @@
             _this.setShow();
         }
         _this.setHide = function() {
+            debugger
             _this.state = 'hide';
             $(_this.tableBox).hide();
 
         }
         _this.blur = function(e) {
+            debugger
+            // 点击对象不是组件dom中的
             if (!$(_this.dom).has(e.target)[0]) {
                 $('html').unbind('click', _this.blur);
                 _this.setHide();
@@ -185,6 +192,7 @@
             }
 
             $(_this.tableBox).find('table').colResizable();
+            // 组件失焦监测
             $('html').click(_this.blur);
         }
 
